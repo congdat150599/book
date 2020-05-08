@@ -1,0 +1,89 @@
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/SharedAdmin/_Layout.cshtml";
+    var customer = ViewBag.customer;
+    var users = ViewBag.users;
+    var shippings = ViewBag.shippings;
+}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Quản lý sách</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row" style="display: block;">
+            <div class="col-md-6 col-sm-6  ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Basic Tables <small>basic table subtitle</small></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <p>
+                        @Html.ActionLink("Create New", "AddCustomer")
+                    </p>
+                    <div class="x_content">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên Khách Hàng</th>
+                                    <th>SDT</th>
+                                    <th>Thành Phố</th>
+                                    <th>Địa Chỉ</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
+                                    <th>Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in customer)
+                                {
+                                    <tr>
+                                        <th scope="row">@item.idCustomer</th>
+                                        <td>@item.nameCustomer</td>
+                                        <td>@item.phoneCustomer</td> 
+                                        @foreach (var s in shippings)
+                                        {
+                                            @if(item.idShip == s.idShip) {
+                                                <td>@s.country</td>
+                                            }
+                                        }
+                                        
+                                        <td>@item.addCus</td>
+                                        @foreach (var u in users)
+                                        {
+                                            @if(u.idUser == item.idUser) {
+                                                <td>@u.email</td>
+                                                <td>@u.password</td>
+                                            }
+                                        }
+                                        <td>
+                                            <a href="/Admin/CustomerUpdate/@item.idCustomer" class="active" ui-toggle-class=""> 
+                                            <i class="fa fa-check text-success text-active"></i></a>
+                                            
+                                            <a href="/Admin/CustomerDelete/@item.idCustomer" class="active" ui-toggle-class="">      
+                                            <i class="fa fa-times text-danger text"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

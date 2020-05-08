@@ -1,0 +1,95 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/SharedAdmin/_Layout.cshtml";
+    var employee = ViewBag.employee;
+    var users = ViewBag.users;
+}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Quản lý sách</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row" style="display: block;">
+            <div class="col-md-6 col-sm-6  ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Basic Tables <small>basic table subtitle</small></h2>
+                       
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                     <p>
+                        @Html.ActionLink("Create New", "AddEmployee")
+                    </p>
+                    <div class="x_content">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên Nhân Viên</th>
+                                    <th>SDT</th>
+                                    <th>Địa Chỉ</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var e in employee)
+                                {
+                                    <tr>
+                                        <th scope="row">@e.idEmployee</th>
+                                        <td>@e.nameEmployee</td>
+                                        <td>@e.phoneEmployee</td>
+                                        <td>@e.addEmployee</td>
+                                        @foreach (var u in users)
+                                        {
+                                            @if(u.idUser == e.idUser) {
+                                                <td>@u.email</td>
+                                                <td>@u.password</td>
+                                            }
+                                        }
+                                        <td>
+                                            <a href="/Admin/EmployeeUpdate/@e.idEmployee" class="active" ui-toggle-class=""> 
+                                            <i class="fa fa-check text-success text-active"></i></a>
+
+                                            <a href="/Admin/EmployeeDelete/@e.idEmployee" class="active" ui-toggle-class="">
+                                            <i class="fa fa-times text-danger text"></i></a>
+                                        </td>
+                                    </tr> 
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
